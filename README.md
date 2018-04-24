@@ -18,7 +18,7 @@
 
 ### Present the average and the median runtime of each of the queries per database.
 
-|   | PostGresSQL Average  | PostGresSQL Median |  Neo4 Average |   Neo4 Median |
+|   | Neo4  Average  | Neo4  Median | PostGresSQL Average |   PostGresSQL Median |
 |---|---|---|---|---|
 |getAllPersonsDepthOne:	|0.03	|0.03	||0.08	|0.06	|
 |getAllPersonsDepthTwo:	|0.03	|0.03	||0.07	|0.06	|
@@ -29,9 +29,17 @@
 
 ### Give an explanation of the differences in your time measurements.
 
-For every query the nodes grows appropriately logarithmically by a base n. If one node as exactly ten endorsements the it would grow logarithmically with base 10 example 10, 100, 1000.
-From the results i have collected I can estimate that the Neo4J might have a appropriately linear running time. It's almost linear even though nodes N grows logarithmically.
-From the results i have collected I can estimate that the Relational database might have a logarithmic running time. Between first and second and second and third the times doubles when nodes grows quadratically as example 10 -100. 
+For every query the number of nodes grows appropriately logarithmically by a base ~n. 
+If one node as exactly ten endorsements then the number of nodes would grow logarithmically with base 10 example 10 (first depth), 100 (second depth), 1000 (third depth etc.
+
+[![https://gyazo.com/531e6af4861d0f0d68e66682e5ae17e9](https://i.gyazo.com/531e6af4861d0f0d68e66682e5ae17e9.png)](https://gyazo.com/531e6af4861d0f0d68e66682e5ae17e9)
+
+- From the results I can estimate that the Neo4J might have a appropriately constant running time. The benchmark test shows that the time is constant even when the data grows, 
+the number of nodes N grows logarithmically.
+
+
+- From the results I can estimate that the Relational database might have a ~quadratic running time. 
+Between first and second and second and third the times doubles (very roughly calculated) when nodes grows quadratically as example 10 (first depth), 100 (second depth), 1000 (third depth etc. 
 
 ### Conclude which database is better suited for this kind of queries and explain why.
 
@@ -170,7 +178,17 @@ CALL db.indexes()
 
 
 
-### Queries used
+### Construct queries
+
+
+
+Construct queries in SQL and in Cypher, which find
+
+- all persons that a person endorses, i.e., endorsements of depth one.
+- all persons that are endorsed by endorsed persons of a person, i.e., endorsements of depth two.
+- endorsements of depth three.
+- endorsements of depth four.
+- endorsements of depth five.
 
 #### SQL
 
@@ -202,7 +220,6 @@ MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]-
 RETURN count(other)
 ```
 
-*Even though index I could not run this level in Neo4J took too much time.*
 
 - endorsements of depth four.
 MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other)
