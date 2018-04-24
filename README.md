@@ -32,7 +32,10 @@
 For every query the number of nodes grows appropriately logarithmically by a base ~n. 
 If one node as exactly ten endorsements then the number of nodes would grow logarithmically with base 10 example 10 (first depth), 100 (second depth), 1000 (third depth etc.
 
-[![https://gyazo.com/531e6af4861d0f0d68e66682e5ae17e9](https://i.gyazo.com/531e6af4861d0f0d68e66682e5ae17e9.png)](https://gyazo.com/531e6af4861d0f0d68e66682e5ae17e9)
+[![https://gyazo.com/695695dbc843f23596dff06c8e9549d9](https://i.gyazo.com/695695dbc843f23596dff06c8e9549d9.png)](https://gyazo.com/695695dbc843f23596dff06c8e9549d9)
+*
+Graphs of functions commonly used in the analysis of algorithms, showing the number of operations N versus input size n for each function
+In computer science, the time complexity is the computational complexity that measures or estimates the time taken for running an algorithm. Here I use it give an proximate estimate to how the time grows in comparison to data to database performance tests*
 
 - From the results I can estimate that the Neo4J might have a appropriately constant running time. The benchmark test shows that the time is constant even when the data grows, 
 the number of nodes N grows logarithmically. The time complexity of the database queries would be O(1.
@@ -72,7 +75,7 @@ ssh into the machine 167.99.249.26
 ssh root@167.99.249.26
 ```
 
-Install docker on the virtual machine and prepare the data
+#### Install docker on the virtual machine and prepare the data
 ```
 wget -O - https://bit.ly/docker-install | bash
 
