@@ -59,18 +59,18 @@ __________________
 (endorsement graph https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material/raw/master/data/archive_graph.tar.gz) into a Neo4j database and into an SQL database respectively.
 
 
-### Set Up A Virtual Machine on Digital Ocean
-
-Create a 8G droplet on Digital Ocean
-ssh into the machine 167.99.249.26
-```
-ssh root@167.99.249.26
-```
-
+My solution uses this IP for the server;
 167.99.249.26:7474 - Neo4J
 
 167.99.249.26:8888 - PostGreSQL
 
+### Set Up A Virtual Machine on Digital Ocean
+
+#### Create a 8G droplet on Digital Ocean
+ssh into the machine 167.99.249.26
+```
+ssh root@167.99.249.26
+```
 
 Install docker on the virtual machine and prepare the data
 ```
@@ -86,7 +86,7 @@ tar xf archive_graph.tar.gz
 sudo rm archive_graph.tar.gz
 ```
 
-### Import The Data To Postgressql
+#### Import The Data To Postgressql
 
 ```
 sudo docker run -p 5432:5432 -v /root/import:/home/import --name data -d jegp/soft2018-data 
@@ -98,7 +98,7 @@ CREATE TABLE endorsement(source_node_id_node_id_node_id BIGINT, target_node_id B
 \copy person FROM '/home/import/social_network_nodes.csv' DELIMITER ',' CSV HEADER;
 \copy endorsement FROM '/home/import/social_network_endorsement.csv' DELIMITER ',' CSV HEADER;
 ```
-### Create Index Postgressql
+#### Create Index Postgressql
 ``` 
 CREATE UNIQUE INDEX index_id ON person (id);
 CREATE INDEX index_name ON person (name);
@@ -109,7 +109,7 @@ exit
 sudo docker run -p 8888:8888 -v /vagrant/jupyter:/home/jovyan --name jupyter --link data -it jegp/soft2018-jupyter 
 ```
 
-### Import Neo4J Data
+#### Import Neo4J Data
 
 ```
 head social_network_nodes.csv
@@ -167,7 +167,7 @@ docker exec neo4j sh -c 'neo4j-admin import \
 docker restart neo4j
 ```
 
-### Create Index in Neo4J via client
+#### Create Index in Neo4J via client
 ```
 CREATE INDEX ON :Person(name)
 
