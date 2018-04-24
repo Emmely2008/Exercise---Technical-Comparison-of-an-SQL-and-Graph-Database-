@@ -19,84 +19,7 @@ public class DataAccessNeo4J implements DataAccessor {
         this.name = "Neo4J";
     }
 
-    public List<Person> getAllPersonsDepthOne(int node) {
-        /*- all persons that a person endorses, i.e., endorsements of depth one.
-        MATCH ({name:"Sol Linkert"})-[:ENDORSES]->(other)
-        RETURN other*/
-        List<Person> list = new ArrayList();
-
-        try {
-            Driver driver = dbConnectorNeo4J.getDriver();
-            String query = "MATCH (x:Person)-[:ENDORSES]->(other) WHERE ID(x)= "+node+"  return DISTINCT ID(other), other.name, other.job, other.birthday;";
-            //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            //String query = "MATCH ({name:\"Sol Linkert\"})-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            Session session = driver.session();
-            // Run a query matching all nodes
-            StatementResult result = session.run(query);
-
-           // list = getResults(result);
-            session.close();
-            //driver.close();
-
-        } catch (Exception e) {
-            if (DEBUG) e.printStackTrace();
-        }
-        return list;
-    }
-
-    public List<Person> getAllPersonsDepthTwo(int node) {
-        /*- endorsements of depth two.
-            MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->(other_other)
-            RETURN other_other*/
-        List<Person> list = new ArrayList();
-
-        try {
-            Driver driver = dbConnectorNeo4J.getDriver();
-           // String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->(other_other) RETURN other_other.name as name, other_other.job as job, other_other.birthday as birthday;";
-            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+" return DISTINCT ID(other), other.name, other.job, other.birthday;";
-            Session session = driver.session();
-
-            // Run a query matching all nodes
-            StatementResult result = session.run(query);
-
-           // list = getResults(result);
-            session.close();
-            //driver.close();
-
-        } catch (Exception e) {
-            if (DEBUG) e.printStackTrace();
-        }
-        return list;
-    }
-
-
-    public List<Person> getAllPersonsDepthThree(int node) {
-        /*- endorsements of depth three.
-        MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other_other_other)
-        RETURN other_other_other*/
-        List<Person> list = new ArrayList();
-
-        try {
-            Driver driver = dbConnectorNeo4J.getDriver();
-            //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+"  return DISTINCT ID(other), other.name, other.job, other.birthday;";
-            Session session = driver.session();
-
-            // Run a query matching all nodes
-            StatementResult result = session.run(query);
-
-           // list = getResults(result);
-            session.close();
-            //driver.close();
-
-        } catch (Exception e) {
-            if (DEBUG) e.printStackTrace();
-        }
-        return list;
-
-    }
-
-    public List<Person> getAllPersonsDepthFour(int node) {
+    private List<Person> getAllPersonsDepthAtDepth(String node, int depth) {
         /*- endorsements of depth four.
         MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other_other_other_other)
         RETURN other_other_other_other*/
@@ -106,14 +29,14 @@ public class DataAccessNeo4J implements DataAccessor {
         try {
             Driver driver = dbConnectorNeo4J.getDriver();
             //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+"  return DISTINCT ID(other), other.name, other.job, other.birthday;";
+            String query = "MATCH (:Person {name:\""+node+"\"})-[:ENDORSES*.."+depth+"]->(p:Person) RETURN DISTINCT ID(p), p.name, p.job, p.birthday;";
 
             Session session = driver.session();
 
             // Run a query matching all nodes
             StatementResult result = session.run(query);
 
-           // list = getResults(result);
+            list = getResults(result);
             session.close();
             //driver.close();
 
@@ -124,31 +47,36 @@ public class DataAccessNeo4J implements DataAccessor {
     }
 
 
-    public List<Person> getAllPersonsDepthFive(int node) {
-        /* - endorsements of depth five.
-        MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other_other_other_other_other)
-        RETURN other_other_other_other_other*/
-        //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-        List<Person> list = new ArrayList();
+    public List<Person> getAllPersonsDepthOne(String node) {
 
-        try {
-            Driver driver = dbConnectorNeo4J.getDriver();
-            //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+" return DISTINCT ID(other), other.name, other.job, other.birthday;";
+        return getAllPersonsDepthAtDepth(node, 1);
 
-            Session session = driver.session();
+    }
 
-            // Run a query matching all nodes
-            StatementResult result = session.run(query);
+    public List<Person> getAllPersonsDepthTwo(String node) {
 
-            //list = getResults(result);
-            session.close();
-            //driver.close();
+        return getAllPersonsDepthAtDepth(node, 2);
 
-        } catch (Exception e) {
-            if (DEBUG) e.printStackTrace();
-        }
-        return list;
+    }
+
+
+    public List<Person> getAllPersonsDepthThree(String node) {
+
+        return getAllPersonsDepthAtDepth(node, 3);
+
+
+    }
+
+    public List<Person> getAllPersonsDepthFour(String node) {
+
+        return getAllPersonsDepthAtDepth(node, 4);
+
+    }
+
+
+    public List<Person> getAllPersonsDepthFive(String node) {
+
+        return getAllPersonsDepthAtDepth(node, 5);
     }
 
     public String getName() {
@@ -161,7 +89,7 @@ public class DataAccessNeo4J implements DataAccessor {
         while (result.hasNext()) {
             Record record = result.next();
             Person p = new Person();
-            // p.setId(record.get("id").asString());
+            p.setId(record.get("ID").asString());
             p.setJob(record.get("job").asString());
             p.setBirthday(record.get("birthday").asString());
             p.setName(record.get("name").asString());

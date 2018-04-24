@@ -11,27 +11,27 @@ public class Benchmark {
     Stopwatch timer;
 
 
-    public Benchmark(DataAccessor dt, Stopwatch timer){
+    public Benchmark(DataAccessor dt, Stopwatch timer) {
         this.dt = dt;
         this.timer = timer;
     }
 
-    private double doBenchmark(String function, int node){
+    private double doBenchmark(String function, String node) {
 
         this.timer.resetTime();
-        if( function.equals("getAllPersonsDepthOne")){
+        if (function.equals("getAllPersonsDepthOne")) {
             dt.getAllPersonsDepthOne(node);
         }
-        if( function.equals("getAllPersonsDepthTwo")){
+        if (function.equals("getAllPersonsDepthTwo")) {
             dt.getAllPersonsDepthTwo(node);
         }
-        if( function.equals("getAllPersonsDepthThree")){
+        if (function.equals("getAllPersonsDepthThree")) {
             dt.getAllPersonsDepthThree(node);
         }
-        if( function.equals("getAllPersonsDepthFour")){
+        if (function.equals("getAllPersonsDepthFour")) {
             dt.getAllPersonsDepthFour(node);
         }
-        if( function.equals("getAllPersonsDepthFive")){
+        if (function.equals("getAllPersonsDepthFive")) {
             dt.getAllPersonsDepthFive(node);
         }
 
@@ -41,7 +41,7 @@ public class Benchmark {
 
     }
 
-    public HashMap getBenchmarkResults(int[] twentyRandomNodes, String[] methods){
+    public HashMap getBenchmarkResults(String[] twentyRandomNodes, String[] methods) {
 
         HashMap measurement = new HashMap();
         for (int i = 0; i < methods.length; i++) {
@@ -55,16 +55,34 @@ public class Benchmark {
         return measurement;
     }
 
-    public void printHashMapsData(HashMap[] hm, String[] keys){
+    public void printHashMapsData(HashMap[] hm, String[] keys) {
 
-        for (int j = 0; j < keys.length ; j++) {
-            System.out.print(keys[j]+":\t");
-                for (int i = 0; i < hm.length ; i++) {
+        for (int j = 0; j < keys.length; j++) {
+            System.out.print(keys[j] + ":\t");
+            for (int i = 0; i < hm.length; i++) {
 
-                    MeasurementData ms = (MeasurementData)hm[i].get(keys[j]);
-                    System.out.print(ms.getAverage() + "("+ms.getType()+")\t");
-                    System.out.print(ms.getMedian() + "("+ms.getType()+")\t");
-                }
+                MeasurementData ms = (MeasurementData) hm[i].get(keys[j]);
+                System.out.print(ms.getAverage() + "(" + ms.getType() + ")\t");
+                System.out.print(ms.getMedian() + "(" + ms.getType() + ")\t");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public void printHashMapsDataIndividualTimes(HashMap[] hm, String[] keys) {
+
+        for (int j = 0; j < keys.length; j++) {
+            System.out.print("|");
+            System.out.print(keys[j] + ":\t");
+            for (int i = 0; i < hm.length; i++) {
+
+                MeasurementData ms = (MeasurementData) hm[i].get(keys[j]);
+                System.out.print("|");
+                System.out.print(ms.getDataListAsString() + "(" + ms.getType() + ")\t");
+
+
+            }
+            System.out.print("|");
             System.out.print("\n");
         }
     }

@@ -20,7 +20,7 @@ class BenchmarkTest {
         Benchmark bm = new Benchmark(new DataAccessStub(), timeMock);
         when(timeMock.elapsedTime()).thenReturn(2.0);
         String[] methodsToTest = {"getAllPersonsDepthOne","getAllPersonsDepthTwo","getAllPersonsDepthFour","getAllPersonsDepthFive"};
-        int[] twentyRandomNodes = {453508};
+        String[] twentyRandomNodes = {"Jeanie Mountcastle"};
 
         HashMap resultsStub = bm.getBenchmarkResults(twentyRandomNodes,methodsToTest);
 
@@ -41,7 +41,7 @@ class BenchmarkTest {
         Benchmark bm = new Benchmark(new DataAccessStub(), timeMock);
         when(timeMock.elapsedTime()).thenReturn(2.0);
         String[] methodsToTest = {"getAllPersonsDepthOne","getAllPersonsDepthTwo","getAllPersonsDepthFour","getAllPersonsDepthFive"};
-        int[] twentyRandomNodes = {453508};
+        String[] twentyRandomNodes = {"Jeanie Mountcastle"};
 
         HashMap resultsStub = bm.getBenchmarkResults(twentyRandomNodes,methodsToTest);
 
@@ -62,7 +62,7 @@ class BenchmarkTest {
         Benchmark bm = new Benchmark(new DataAccessStub(), timeMock);
         when(timeMock.elapsedTime()).thenReturn(2.0);
         String[] methodsToTest = {"getAllPersonsDepthOne","getAllPersonsDepthTwo","getAllPersonsDepthFour","getAllPersonsDepthFive"};
-        int[] twentyRandomNodes = {453508};
+        String[] twentyRandomNodes = {"Jeanie Mountcastle"};
 
         HashMap resultsStub = bm.getBenchmarkResults(twentyRandomNodes,methodsToTest);
 
