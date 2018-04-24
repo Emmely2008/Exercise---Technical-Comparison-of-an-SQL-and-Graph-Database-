@@ -33,6 +33,7 @@ For every query the number of nodes grows appropriately logarithmically by a bas
 If one node as exactly ten endorsements then the number of nodes would grow logarithmically with base 10 example 10 (first depth), 100 (second depth), 1000 (third depth etc.
 
 [![https://gyazo.com/695695dbc843f23596dff06c8e9549d9](https://i.gyazo.com/695695dbc843f23596dff06c8e9549d9.png)](https://gyazo.com/695695dbc843f23596dff06c8e9549d9)
+
 *Graphs of functions commonly used in the analysis of algorithms, showing the number of operations N versus input size n for each function
 In computer science, the time complexity is the computational complexity that measures or estimates the time taken for running an algorithm. Here I use it give an proximate estimate to how the time grows in comparison to data to database performance tests*
 
