@@ -43,7 +43,7 @@ Between first and second and second and third the times doubles (very roughly ca
 
 ### Conclude which database is better suited for this kind of queries and explain why.
 
-- Neo4J has the best performance for ueries like this.
+- Neo4J has the best performance for queries like this.
 - The relational databases performed slightly slower for operations like this.
 
 I expected the relational database to be much slower. I didn't expect the Neo4J to have almost linear running time when data grows logarithmically.
