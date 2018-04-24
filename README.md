@@ -5,7 +5,7 @@
 
 
 
-#### Present the execution time of each query each of the 20 random nodes/persons per database.
+### Present the execution time of each query each of the 20 random nodes/persons per database.
 
 |   |  Neo4  | PostGresSQL |
 |---|---|---|
@@ -16,7 +16,7 @@
 |getAllPersonsDepthFive:	|{0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.04}	|{0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.08,0.19,12.31,16.03,35.11,40.45}	|
 
 
-#### Present the average and the median runtime of each of the queries per database.
+### Present the average and the median runtime of each of the queries per database.
 
 |   | PostGresSQL Average  | PostGresSQL Median |  Neo4 Average |   Neo4 Median |
 |---|---|---|---|---|
@@ -27,39 +27,41 @@
 |getAllPersonsDepthFive:	|0.03	|0.03	||5.25	|0.06	|
 
 
-#### Give an explanation of the differences in your time measurements.
+### Give an explanation of the differences in your time measurements.
 
 For every query the nodes grows appropriately logarithmically by a base n. If one node as exactly ten endorsements the it would grow logarithmically with base 10 example 10, 100, 1000.
 From the results i have collected I can estimate that the Neo4J might have a appropriately linear running time. It's almost linear even though nodes N grows logarithmically.
 From the results i have collected I can estimate that the Relational database might have a logarithmic running time. Between first and second and second and third the times doubles when nodes grows quadratically as example 10 -100. 
 
-#### Conclude which database is better suited for this kind of queries and explain why.
+### Conclude which database is better suited for this kind of queries and explain why.
 
-For queries up to level three the Neo4J has the best performance.
+- Neo4J has the best performance for ueries like this.
+- The relational databases performed slightly slower for operations like this.
 
+I expected the relational database to be much slower. I didn't expect the Neo4J to have almost linear running time when data grows logarithmically.
 
-The relational databases performed slightly slower for operations like this.
 
 
 __________________
 
-#### TASKS
+## Setting Up the solution
 
 1. Setup an SQL and a Neo4j database respectively.
 2. Import the data from the social network 
 (endorsement graph https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material/raw/master/data/archive_graph.tar.gz) into a Neo4j database and into an SQL database respectively.
 
 
-#### Set up a virtual machine
+### Set Up A Virtual Machine on Digital Ocean
 
-Spin up a 8G droplet on Digital Ocean
+Create a 8G droplet on Digital Ocean
 ssh into the machine 167.99.249.26
 ```
 ssh root@167.99.249.26
 ```
 
 167.99.249.26:7474 - Neo4J
-167.99.249.26:8888 - Neo4J
+
+167.99.249.26:8888 - PostGreSQL
 
 
 Install docker on the virtual machine and prepare the data
@@ -76,7 +78,7 @@ tar xf archive_graph.tar.gz
 sudo rm archive_graph.tar.gz
 ```
 
-#### Import the PostGresSQL
+### Import The Data To Postgressql
 
 ```
 sudo docker run -p 5432:5432 -v /root/import:/home/import --name data -d jegp/soft2018-data 
@@ -88,7 +90,7 @@ CREATE TABLE endorsement(source_node_id_node_id_node_id BIGINT, target_node_id B
 \copy person FROM '/home/import/social_network_nodes.csv' DELIMITER ',' CSV HEADER;
 \copy endorsement FROM '/home/import/social_network_endorsement.csv' DELIMITER ',' CSV HEADER;
 ```
-#### Create Index
+### Create Index Postgressql
 ``` 
 CREATE UNIQUE INDEX index_id ON person (id);
 CREATE INDEX index_name ON person (name);
@@ -99,7 +101,7 @@ exit
 sudo docker run -p 8888:8888 -v /vagrant/jupyter:/home/jovyan --name jupyter --link data -it jegp/soft2018-jupyter 
 ```
 
-#### Import Neo4J Database
+### Import Neo4J Data
 
 ```
 head social_network_nodes.csv
@@ -157,7 +159,7 @@ docker exec neo4j sh -c 'neo4j-admin import \
 docker restart neo4j
 ```
 
-#### Create Index in Neo4J client
+### Create Index in Neo4J via client
 ```
 CREATE INDEX ON :Person(name)
 
@@ -168,18 +170,23 @@ CALL db.indexes()
 
 
 
-#### Queries
+### Queries used
 
-##### SQL
+#### SQL
 
 ```
+ endorsements of depth one.
 SELECT * FROM chinook.person a IN  (select * FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name='"+person+"') b ON a.id=b.target_node_id;
+- endorsements of depth two.
 SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"'));
+- endorsements of depth three.
 SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')));
+- endorsements of depth four.
 SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert'))));
+- endorsements of depth five.
 SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert')))));
 ```
-##### Cypher
+#### Cypher
 
 ```
 - all persons that a person endorses, i.e., endorsements of depth one.
@@ -210,19 +217,3 @@ RETURN count(other)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-getAllPersonsDepthOne:	0.055400000000000005(Neo4J)	0.055(Neo4J)	0.022400000000000007(PostGreSQL)	0.022(PostGreSQL)	
-getAllPersonsDepthTwo:	0.05515000000000002(Neo4J)	0.055(Neo4J)	0.023500000000000004(PostGreSQL)	0.022(PostGreSQL)	
-getAllPersonsDepthThree:	0.06425000000000002(Neo4J)	0.0555(Neo4J)	0.027350000000000006(PostGreSQL)	0.024(PostGreSQL)	
-getAllPersonsDepthFour:	0.08015(Neo4J)	0.077(Neo4J)	0.029300000000000003(PostGreSQL)	0.026(PostGreSQL)	
-getAllPersonsDepthFive:	0.15650000000000003(Neo4J)	0.14650000000000002(Neo4J)	0.025750000000000006(PostGreSQL)	0.025500000000000002(PostGreSQL)	
