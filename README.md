@@ -281,6 +281,16 @@ public class Main {
 
 ```
 
+_____________________
 
+
+### Some Inconsistency I Found
+
+The data is the same but the result set seems to differ. If it's the queries/import or the database I haven't looked in to:
+
+
+[![https://gyazo.com/12e54376d5741b2992138278446b6360](https://i.gyazo.com/12e54376d5741b2992138278446b6360.png)](https://gyazo.com/12e54376d5741b2992138278446b6360)
+
+[![https://gyazo.com/a8eeaf52b1658d18ec41748619a08ca5](https://i.gyazo.com/a8eeaf52b1658d18ec41748619a08ca5.png)](https://gyazo.com/a8eeaf52b1658d18ec41748619a08ca5)
 
 
