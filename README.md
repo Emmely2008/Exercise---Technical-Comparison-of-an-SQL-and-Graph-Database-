@@ -35,7 +35,7 @@ If one node as exactly ten endorsements then the number of nodes would grow loga
 [![https://gyazo.com/531e6af4861d0f0d68e66682e5ae17e9](https://i.gyazo.com/531e6af4861d0f0d68e66682e5ae17e9.png)](https://gyazo.com/531e6af4861d0f0d68e66682e5ae17e9)
 
 - From the results I can estimate that the Neo4J might have a appropriately constant running time. The benchmark test shows that the time is constant even when the data grows, 
-the number of nodes N grows logarithmically.
+the number of nodes N grows logarithmically. The time complexity of the database queries would be O(1.
 
 
 - From the results I can estimate that the Relational database might have a ~quadratic running time. 
