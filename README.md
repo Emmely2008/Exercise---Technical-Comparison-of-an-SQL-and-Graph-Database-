@@ -22,11 +22,11 @@ __________________
 
 |   | Neo4  Average  | Neo4  Median | PostGresSQL Average |   PostGresSQL Median |
 |---|---|---|---|---|
-|getAllPersonsDepthOne:	|0.03	|0.03	||0.08	|0.06	|
-|getAllPersonsDepthTwo:	|0.03	|0.03	||0.07	|0.06	|
-|getAllPersonsDepthThree:	|0.03	|0.03	||0.1	|0.05	|
-|getAllPersonsDepthFour:	|0.03	|0.03	||0.36	|0.05	|
-|getAllPersonsDepthFive:	|0.03	|0.03	||5.25	|0.06	|
+|getAllPersonsDepthOne:	|0.03	|0.03	|0.08	|0.06	|
+|getAllPersonsDepthTwo:	|0.03	|0.03	|0.07	|0.06	|
+|getAllPersonsDepthThree:	|0.03	|0.03	|0.1	|0.05	|
+|getAllPersonsDepthFour:	|0.03	|0.03	|0.36	|0.05	|
+|getAllPersonsDepthFive:	|0.03	|0.03	|5.25	|0.06	|
 
 
 ### Task: Give an explanation of the differences in your time measurements.
