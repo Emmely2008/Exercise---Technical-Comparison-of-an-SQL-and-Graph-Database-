@@ -7,7 +7,7 @@
 __________________
 ## Benchmark Test Results and Conclusions
 
-### Present the execution time of each query each of the 20 random nodes/persons per database.
+### Task: Present the execution time of each query each of the 20 random nodes/persons per database.
 
 |   |  Neo4  | PostGresSQL |
 |---|---|---|
@@ -18,7 +18,7 @@ __________________
 |getAllPersonsDepthFive:	|{0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.04}	|{0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.08,0.19,12.31,16.03,35.11,40.45}	|
 
 
-### Present the average and the median runtime of each of the queries per database.
+### Task: Present the average and the median runtime of each of the queries per database.
 
 |   | Neo4  Average  | Neo4  Median | PostGresSQL Average |   PostGresSQL Median |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ __________________
 |getAllPersonsDepthFive:	|0.03	|0.03	||5.25	|0.06	|
 
 
-### Give an explanation of the differences in your time measurements.
+### Task: Give an explanation of the differences in your time measurements.
 
 For every query the number of nodes grows appropriately logarithmically by a base ~n. 
 If one node as exactly ten endorsements then the number of nodes would grow logarithmically with base 10 example 10 (first depth), 100 (second depth), 1000 (third depth etc.
@@ -46,7 +46,7 @@ the number of nodes N grows logarithmically. The time complexity of the database
 - From the results I can estimate that the Relational database might have a ~quadratic running time. 
 Between first and second and second and third the times doubles (very roughly calculated) when nodes grows quadratically as example 10 (first depth), 100 (second depth), 1000 (third depth etc. 
 
-### Conclude which database is better suited for this kind of queries and explain why.
+### Task: Conclude which database is better suited for this kind of queries and explain why.
 
 - Neo4J has the best performance for queries like this.
 - The relational databases performed slightly slower for operations like this.
@@ -68,6 +68,7 @@ __________________
 
 ## Setting Up the solution
 
+Taskz:
 1. Setup an SQL and a Neo4j database respectively.
 2. Import the data from the social network 
 (endorsement graph https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material/raw/master/data/archive_graph.tar.gz) into a Neo4j database and into an SQL database respectively.
