@@ -12,21 +12,11 @@ public class Main {
 
 
     public static void main(String[] args) {
-/*        int neo = new DataAccessNeo4J(new DBConnectorNeo4J()).getAllPersonsDepthOne("Jeanie Mountcastle").size();
-        int pos = 0;
-        try {
-            pos = new DataAccessPostGreSQL(new DBConnectorPostGres()).getAllPersonsDepthOne("Jeanie Mountcastle").size();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
-        //System.out.println(neo);
-        // System.out.println(pos);
 
         String[] methodsToTest = {"getAllPersonsDepthOne", "getAllPersonsDepthTwo", "getAllPersonsDepthThree", "getAllPersonsDepthFour", "getAllPersonsDepthFive"};
-        //String[] methodsToTest = {"getAllPersonsDepthOne","getAllPersonsDepthTwo"};
-        //String[] methodsToTest = {"getAllPersonsDepthOne"};
-        //todo 20 people here - random
+
+        //20 random people
         int limit = 20;
         int[] twentyRandomNodes = new int[limit];
         Random generator = new Random();
@@ -37,13 +27,15 @@ public class Main {
 
         }
         //Stubbing
-/*        Benchmark bmStub = new Benchmark(new DataAccessStub(), new Stopwatch());
+        /*Benchmark bmStub = new Benchmark(new DataAccessStub(), new Stopwatch());
         HashMap resultsStub = bmStub .getBenchmarkResults(twentyRandomNodes,methodsToTest);*/
+
         //Neo4J
         DataAccessNeo4JCount daoneo4J = new DataAccessNeo4JCount(new DBConnectorNeo4J());
         BenchmarkCount bmNeo4J = new BenchmarkCount(daoneo4J, new Stopwatch());
         HashMap resultsNeo4J = bmNeo4J.getBenchmarkResults(twentyRandomNodes, methodsToTest);
         daoneo4J.close();
+
         //PostGres
         BenchmarkCount bmPostGres = null;
         try {
@@ -53,12 +45,11 @@ public class Main {
         }
         HashMap resultsPostGres = bmPostGres.getBenchmarkResults(twentyRandomNodes, methodsToTest);
 
-        //resultsPostGres
-        //HashMap[] hm = { resultsNeo4J };
-        HashMap[] hm = {resultsPostGres, resultsNeo4J };
-        // HashMap[] hm = { resultsNeo4J};
-        bmPostGres.printHashMapsData(hm, methodsToTest);
-        bmPostGres.printHashMapsDataIndividualTimes(hm, methodsToTest);
+        HashMap[] hashMaps = {resultsPostGres, resultsNeo4J };
+
+        // print result
+        bmPostGres.printHashMapsData(hashMaps, methodsToTest);
+        bmPostGres.printHashMapsDataIndividualTimes(hashMaps, methodsToTest);
 
     }
 
