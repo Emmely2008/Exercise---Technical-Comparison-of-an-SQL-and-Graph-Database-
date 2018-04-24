@@ -51,7 +51,16 @@ Between first and second and second and third the times doubles (very roughly ca
 
 I expected the relational database to be much slower. I didn't expect the Neo4J to have almost linear running time when data grows logarithmically.
 
+For this kinds of types of queries Neo4J is the perfecter database because of it's performance and intuitive Graphical Display of the result set.
+The query are also shorter and more understandable.
 
+Neo4J
+
+- Significantly Better performance
+- More intuitive.
+
+
+... for queries like this.
 
 __________________
 
