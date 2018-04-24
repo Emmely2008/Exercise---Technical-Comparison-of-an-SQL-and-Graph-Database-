@@ -5,10 +5,10 @@ import model.Person;
 import java.util.List;
 
 public interface DataAccessor {
-    public List<Person> getAllPersonsDepthOne(String nodeAsName);
-    public List<Person> getAllPersonsDepthTwo(String nodeAsName);
-    public List<Person> getAllPersonsDepthThree(String nodeAsName);
-    public List<Person> getAllPersonsDepthFour(String nodeAsName);
-    public List<Person> getAllPersonsDepthFive(String nodeAsName);
+    public List<Person> getAllPersonsDepthOne(int node);
+    public List<Person> getAllPersonsDepthTwo(int node);
+    public List<Person> getAllPersonsDepthThree(int node);
+    public List<Person> getAllPersonsDepthFour(int node);
+    public List<Person> getAllPersonsDepthFive(int node);
     public String getName();
 }

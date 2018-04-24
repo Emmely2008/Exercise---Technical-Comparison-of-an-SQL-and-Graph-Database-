@@ -14,7 +14,7 @@ class DataAccessNeo4JTest {
     @Test
     void getAllPersonsDepthOne() {
         DataAccessNeo4J da = new DataAccessNeo4J(new DBConnectorNeo4J());
-        List<Person> list = da.getAllPersonsDepthOne("Sol Linkert");
+        List<Person> list = da.getAllPersonsDepthOne(2);
         assertThat(list.size(), equalTo(8));
     }
    /* @Test

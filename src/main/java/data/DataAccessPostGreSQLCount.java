@@ -15,13 +15,13 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         this.dbConnectorPostGres = dbConnectorPostGres;
     }
 
-    public int getAllPersonsDepthOne(String person) {
+    public int getAllPersonsDepthOne(int node) {
         int count = 0;
 
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person a JOIN  (select * FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name='" + person + "') b ON a.id=b.target_node_id;";
+            String query = "SELECT count(*) FROM chinook.person a JOIN  (select * FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name='" + node + "') b ON a.id=b.target_node_id;";
             ResultSet res = stmt.executeQuery(query);
             count = this.getResults(res);
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         return count;
     }
 
-    public int getAllPersonsDepthTwo(String person) {
+    public int getAllPersonsDepthTwo(int node) {
         /*
         Second
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"'));
@@ -40,7 +40,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "'));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + node + "'));";
             ResultSet res = stmt.executeQuery(query);
 
             count = this.getResults(res);
@@ -51,7 +51,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         return count;
     }
 
-    public int getAllPersonsDepthThree(String person) {
+    public int getAllPersonsDepthThree(int node) {
         /*Third
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert')));
@@ -61,7 +61,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "')));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + node + "')));";
             ResultSet res = stmt.executeQuery(query);
 
             count = this.getResults(res);
@@ -72,7 +72,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         return count;
     }
 
-    public int getAllPersonsDepthFour(String person) {
+    public int getAllPersonsDepthFour(int node) {
         /*Fourt
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"'))));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert'))));
@@ -82,7 +82,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "'))));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + node + "'))));";
             ResultSet res = stmt.executeQuery(query);
 
             count = this.getResults(res);
@@ -93,7 +93,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         return count;
     }
 
-    public int getAllPersonsDepthFive(String person) {
+    public int getAllPersonsDepthFive(int node) {
         /* Fifth
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')))));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert')))));
@@ -103,7 +103,7 @@ public class DataAccessPostGreSQLCount implements DataAccessorCount {
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "')))));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + node + "')))));";
             ResultSet res = stmt.executeQuery(query);
 
             count = this.getResults(res);

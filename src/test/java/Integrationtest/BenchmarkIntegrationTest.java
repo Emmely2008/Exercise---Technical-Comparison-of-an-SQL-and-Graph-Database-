@@ -35,7 +35,7 @@ public class BenchmarkIntegrationTest {
 
         Benchmark bm = new Benchmark(new DataAccessNeo4J(new DBConnectorNeo4J()), time);
         String[] methodsToTest = {"getAllPersonsDepthOne"};
-        String[] twentyRandomNodes = {"Dino Kalt","Shirl Wilcock","Dulcie Miyares","Gianna Alan"};
+        int[] twentyRandomNodes = {453508};
 
         HashMap resultsNeo4J = bm.getBenchmarkResults(twentyRandomNodes,methodsToTest);
 
@@ -56,7 +56,7 @@ public class BenchmarkIntegrationTest {
 
         Benchmark bm = new Benchmark(new DataAccessPostGreSQL(new DBConnectorPostGres()), time);
         String[] methodsToTest = {"getAllPersonsDepthOne"};
-        String[] twentyRandomNodes = {"Dino Kalt","Shirl Wilcock","Dulcie Miyares","Gianna Alan"};
+        int[] twentyRandomNodes = {453508};
 
         HashMap resultsPotGres = bm.getBenchmarkResults(twentyRandomNodes,methodsToTest);
 

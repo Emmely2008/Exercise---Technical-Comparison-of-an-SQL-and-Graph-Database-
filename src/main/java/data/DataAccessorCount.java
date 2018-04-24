@@ -1,10 +1,10 @@
 package data;
 
 public interface DataAccessorCount {
-    public int getAllPersonsDepthOne(String nodeAsName);
-    public int getAllPersonsDepthTwo(String nodeAsName);
-    public int getAllPersonsDepthThree(String nodeAsName);
-    public int getAllPersonsDepthFour(String nodeAsName);
-    public int getAllPersonsDepthFive(String nodeAsName);
+    public int getAllPersonsDepthOne(int node);
+    public int getAllPersonsDepthTwo(int node);
+    public int getAllPersonsDepthThree(int node);
+    public int getAllPersonsDepthFour(int node);
+    public int getAllPersonsDepthFive(int node);
     public String getName();
 }

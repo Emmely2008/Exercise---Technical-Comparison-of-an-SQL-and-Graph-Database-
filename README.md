@@ -7,46 +7,50 @@
 
 #### Present the execution time of each query each of the 20 random nodes/persons per database.
 
+|   |  Neo4  | PostGresSQL |
+|---|---|---|
+|getAllPersonsDepthOne:	|{0.02,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.06}	|{0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.07,0.07,0.08,0.08,0.09,0.1,0.1,0.16,0.22}	|
+|getAllPersonsDepthTwo:	|{0.02,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.05}	|{0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.06,0.06,0.06,0.06,0.06,0.07,0.07,0.07,0.07,0.07,0.1,0.12,0.16}	|
+|getAllPersonsDepthThree:	|{0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.04}	|{0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.06,0.06,0.06,0.06,0.06,0.12,0.12,0.14,0.35,0.45}	|
+|getAllPersonsDepthFour:	|{0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.04}	|{0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.06,0.06,0.06,0.14,0.65,0.92,2.25,2.37}	|
+|getAllPersonsDepthFive:	|{0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.04}	|{0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.08,0.19,12.31,16.03,35.11,40.45}	|
 
 
 #### Present the average and the median runtime of each of the queries per database.
 
-|   |  Neo4 Average |  Neo4 Median | PostGresSQL Average  |  PostGresSQL Median |
+|   | PostGresSQL Average  | PostGresSQL Median |  Neo4 Average |   Neo4 Median |
 |---|---|---|---|---|
-|getAllPersonsDepthOne:| 0.55  | 0.54  |  0.55 | 	0.56  |
-|getAllPersonsDepthTwo:|  0.62 | 0.60  |  1.80 |  1.91 |
-|getAllPersonsDepthThree:|  0.6 | 0.59  |  3.19 |  3.4 |
-
+|getAllPersonsDepthOne:	|0.03	|0.03	||0.08	|0.06	|
+|getAllPersonsDepthTwo:	|0.03	|0.03	||0.07	|0.06	|
+|getAllPersonsDepthThree:	|0.03	|0.03	||0.1	|0.05	|
+|getAllPersonsDepthFour:	|0.03	|0.03	||0.36	|0.05	|
+|getAllPersonsDepthFive:	|0.03	|0.03	||5.25	|0.06	|
 
 
 #### Give an explanation of the differences in your time measurements.
 
 For every query the nodes grows appropriately logarithmically by a base n. If one node as exactly ten endorsements the it would grow logarithmically with base 10 example 10, 100, 1000.
-From the results i have collected I can estimate that the Neo4J might have a appropriately linear+logarithmic running time. It's almost linear even though nodes N grows logarithmically.
+From the results i have collected I can estimate that the Neo4J might have a appropriately linear running time. It's almost linear even though nodes N grows logarithmically.
 From the results i have collected I can estimate that the Relational database might have a logarithmic running time. Between first and second and second and third the times doubles when nodes grows quadratically as example 10 -100. 
 
 #### Conclude which database is better suited for this kind of queries and explain why.
+
 For queries up to level three the Neo4J has the best performance.
 
-In my test the Neo4J had no performance at all for level four and five.
 
-The relational databases performed slightly slower but robust and reliable.
-
+The relational databases performed slightly slower for operations like this.
 
 
+__________________
 
-#### 1. Setup an SQL and a Neo4j database respectively.
-#### 2. Import the data from the social network 
+#### TASKS
+
+1. Setup an SQL and a Neo4j database respectively.
+2. Import the data from the social network 
 (endorsement graph https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material/raw/master/data/archive_graph.tar.gz) into a Neo4j database and into an SQL database respectively.
 
 
-
-
-
-
 #### Set up a virtual machine
-
-
 
 Spin up a 8G droplet on Digital Ocean
 ssh into the machine 167.99.249.26
@@ -71,8 +75,6 @@ wget https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material
 tar xf archive_graph.tar.gz
 sudo rm archive_graph.tar.gz
 ```
-
-
 
 #### Import the PostGresSQL
 
@@ -158,6 +160,10 @@ docker restart neo4j
 #### Create Index in Neo4J client
 ```
 CREATE INDEX ON :Person(name)
+
+CREATE INDEX ON :Person(ID)
+CALL db.indexes()
+
 ```
 
 

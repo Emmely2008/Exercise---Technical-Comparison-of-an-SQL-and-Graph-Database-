@@ -19,7 +19,7 @@ public class DataAccessNeo4J implements DataAccessor {
         this.name = "Neo4J";
     }
 
-    public List<Person> getAllPersonsDepthOne(String person) {
+    public List<Person> getAllPersonsDepthOne(int node) {
         /*- all persons that a person endorses, i.e., endorsements of depth one.
         MATCH ({name:"Sol Linkert"})-[:ENDORSES]->(other)
         RETURN other*/
@@ -27,7 +27,7 @@ public class DataAccessNeo4J implements DataAccessor {
 
         try {
             Driver driver = dbConnectorNeo4J.getDriver();
-            String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->(other) RETURN count(other);";
+            String query = "MATCH (x:Person)-[:ENDORSES]->(other) WHERE ID(x)= "+node+"  return DISTINCT ID(other), other.name, other.job, other.birthday;";
             //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
             //String query = "MATCH ({name:\"Sol Linkert\"})-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
             Session session = driver.session();
@@ -44,7 +44,7 @@ public class DataAccessNeo4J implements DataAccessor {
         return list;
     }
 
-    public List<Person> getAllPersonsDepthTwo(String person) {
+    public List<Person> getAllPersonsDepthTwo(int node) {
         /*- endorsements of depth two.
             MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->(other_other)
             RETURN other_other*/
@@ -53,7 +53,7 @@ public class DataAccessNeo4J implements DataAccessor {
         try {
             Driver driver = dbConnectorNeo4J.getDriver();
            // String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->(other_other) RETURN other_other.name as name, other_other.job as job, other_other.birthday as birthday;";
-            String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->(other_other) RETURN count(other_other);";
+            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+" return DISTINCT ID(other), other.name, other.job, other.birthday;";
             Session session = driver.session();
 
             // Run a query matching all nodes
@@ -70,7 +70,7 @@ public class DataAccessNeo4J implements DataAccessor {
     }
 
 
-    public List<Person> getAllPersonsDepthThree(String person) {
+    public List<Person> getAllPersonsDepthThree(int node) {
         /*- endorsements of depth three.
         MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other_other_other)
         RETURN other_other_other*/
@@ -79,7 +79,7 @@ public class DataAccessNeo4J implements DataAccessor {
         try {
             Driver driver = dbConnectorNeo4J.getDriver();
             //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN count(other);";
+            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+"  return DISTINCT ID(other), other.name, other.job, other.birthday;";
             Session session = driver.session();
 
             // Run a query matching all nodes
@@ -96,7 +96,7 @@ public class DataAccessNeo4J implements DataAccessor {
 
     }
 
-    public List<Person> getAllPersonsDepthFour(String person) {
+    public List<Person> getAllPersonsDepthFour(int node) {
         /*- endorsements of depth four.
         MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other_other_other_other)
         RETURN other_other_other_other*/
@@ -106,7 +106,7 @@ public class DataAccessNeo4J implements DataAccessor {
         try {
             Driver driver = dbConnectorNeo4J.getDriver();
             //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN count(other);";
+            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+"  return DISTINCT ID(other), other.name, other.job, other.birthday;";
 
             Session session = driver.session();
 
@@ -124,7 +124,7 @@ public class DataAccessNeo4J implements DataAccessor {
     }
 
 
-    public List<Person> getAllPersonsDepthFive(String person) {
+    public List<Person> getAllPersonsDepthFive(int node) {
         /* - endorsements of depth five.
         MATCH ({name:"Sol Linkert"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other_other_other_other_other)
         RETURN other_other_other_other_other*/
@@ -134,7 +134,7 @@ public class DataAccessNeo4J implements DataAccessor {
         try {
             Driver driver = dbConnectorNeo4J.getDriver();
             //String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN other.name as name, other.job as job, other.birthday as birthday;";
-            String query = "MATCH ({name:\""+person+"\"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) RETURN count(other);";
+            String query = "MATCH (x:Person)-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other) WHERE ID(x)= "+node+" return DISTINCT ID(other), other.name, other.job, other.birthday;";
 
             Session session = driver.session();
 

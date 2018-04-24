@@ -16,23 +16,23 @@ public class Benchmark {
         this.timer = timer;
     }
 
-    private double doBenchmark(String function, String nodeAsName){
+    private double doBenchmark(String function, int node){
 
         this.timer.resetTime();
         if( function.equals("getAllPersonsDepthOne")){
-            dt.getAllPersonsDepthOne(nodeAsName);
+            dt.getAllPersonsDepthOne(node);
         }
         if( function.equals("getAllPersonsDepthTwo")){
-            dt.getAllPersonsDepthTwo(nodeAsName);
+            dt.getAllPersonsDepthTwo(node);
         }
         if( function.equals("getAllPersonsDepthThree")){
-            dt.getAllPersonsDepthThree(nodeAsName);
+            dt.getAllPersonsDepthThree(node);
         }
         if( function.equals("getAllPersonsDepthFour")){
-            dt.getAllPersonsDepthFour(nodeAsName);
+            dt.getAllPersonsDepthFour(node);
         }
         if( function.equals("getAllPersonsDepthFive")){
-            dt.getAllPersonsDepthFive(nodeAsName);
+            dt.getAllPersonsDepthFive(node);
         }
 
         double time = timer.elapsedTime();
@@ -41,7 +41,7 @@ public class Benchmark {
 
     }
 
-    public HashMap getBenchmarkResults(String[] twentyRandomNodes, String[] methods){
+    public HashMap getBenchmarkResults(int[] twentyRandomNodes, String[] methods){
 
         HashMap measurement = new HashMap();
         for (int i = 0; i < methods.length; i++) {
