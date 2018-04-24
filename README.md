@@ -53,8 +53,8 @@ Between first and second and second and third the times doubles (very roughly ca
 
 I expected the relational database to be much slower. I didn't expect the Neo4J to have almost linear running time when data grows logarithmically.
 
-For this kinds of types of queries Neo4J is the perfecter database because of it's performance and intuitive Graphical Display of the result set.
-The query are also shorter and more understandable.
+For this kinds of types of queries Neo4J is the preferred database because of it's performance which becomes significance when the set/join grows and intuitive Graphical Display of the result set.
+The query are also shorter and more understandable for this types of queries.
 
 Neo4J
 
@@ -68,7 +68,7 @@ __________________
 
 ## Setting Up the solution
 
-Taskz:
+Task:
 1. Setup an SQL and a Neo4j database respectively.
 2. Import the data from the social network 
 (endorsement graph https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material/raw/master/data/archive_graph.tar.gz) into a Neo4j database and into an SQL database respectively.
@@ -222,28 +222,7 @@ SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.end
 ```
 #### Cypher
 
-```
-- all persons that a person endorses, i.e., endorsements of depth one.
-MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->(other)
-RETURN count(other)
-
-- endorsements of depth two.
-MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->()-[:ENDORSES]->(other)
-RETURN count(other)
-
-- endorsements of depth three.
-MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other)
-RETURN count(other)
-```
-
-
-- endorsements of depth four.
-MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other)
-RETURN count(other)
-
-- endorsements of depth five.
-MATCH ({name:"Jeanie Mountcastle"})-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->()-[:ENDORSES]->(other)
-RETURN count(other)
+- - - -
 
 #### The Benchmark program
 
