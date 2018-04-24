@@ -1,135 +1,129 @@
 package data;
 
-import model.Person;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-public class DataAccessPostGreSQL implements DataAccessor {
+public class DataAccessPostGreSQLCount implements DataAccessorCount {
     private static final boolean DEBUG = true;
     private String name;
     private DBConnectorPostGres dbConnectorPostGres;
 
-    public DataAccessPostGreSQL(DBConnectorPostGres dbConnectorPostGres) {
-        this.name = "PostGreSQL";
+    public DataAccessPostGreSQLCount(DBConnectorPostGres dbConnectorPostGres) {
+        this.name = "PostGreSQLCount";
         this.dbConnectorPostGres = dbConnectorPostGres;
     }
 
-    public List<Person> getAllPersonsDepthOne(String person) {
-        List<Person> list = new ArrayList();
+    public int getAllPersonsDepthOne(String person) {
+        int count = 0;
 
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
             String query = "SELECT count(*) FROM chinook.person a JOIN  (select * FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name='" + person + "') b ON a.id=b.target_node_id;";
             ResultSet res = stmt.executeQuery(query);
-            //list = this.getResults(res);
+            count = this.getResults(res);
         } catch (Exception e) {
             if (DEBUG) e.printStackTrace();
         }
-        return list;
+        return count;
     }
 
-    public List<Person> getAllPersonsDepthTwo(String person) {
+    public int getAllPersonsDepthTwo(String person) {
         /*
         Second
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"'));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert'));        List<Person> list = new ArrayList();
         */
-        List<Person> list = new ArrayList();
+        int count = 0;
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
             String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "'));";
             ResultSet res = stmt.executeQuery(query);
 
-           // list = this.getResults(res);
+            count = this.getResults(res);
 
         } catch (Exception e) {
             if (DEBUG) e.printStackTrace();
         }
-        return list;
+        return count;
     }
 
-    public List<Person> getAllPersonsDepthThree(String person) {
+    public int getAllPersonsDepthThree(String person) {
         /*Third
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert')));
         */
 
-        List<Person> list = new ArrayList();
+        int count = 0;
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "')));";
             ResultSet res = stmt.executeQuery(query);
 
-            //list = this.getResults(res);
+            count = this.getResults(res);
 
         } catch (Exception e) {
             if (DEBUG) e.printStackTrace();
         }
-        return list;
+        return count;
     }
 
-    public List<Person> getAllPersonsDepthFour(String person) {
+    public int getAllPersonsDepthFour(String person) {
         /*Fourt
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"'))));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert'))));
         */
 
-        List<Person> list = new ArrayList();
+        int count = 0;
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"'))));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "'))));";
             ResultSet res = stmt.executeQuery(query);
 
-            //list = this.getResults(res);
+            count = this.getResults(res);
 
         } catch (Exception e) {
             if (DEBUG) e.printStackTrace();
         }
-        return list;
+        return count;
     }
 
-    public List<Person> getAllPersonsDepthFive(String person) {
+    public int getAllPersonsDepthFive(String person) {
         /* Fifth
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')))));
         %sql SELECT * FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = 'Sol Linkert')))));
         */
 
-        List<Person> list = new ArrayList();
+        int count = 0;
         try {
             Connection connection = this.dbConnectorPostGres.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '"+person+"')))));";
+            String query = "SELECT count(*) FROM chinook.person WHERE id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement WHERE source_node_id IN (SELECT target_node_id FROM chinook.endorsement e JOIN chinook.person p ON e.source_node_id = p.id WHERE p.name = '" + person + "')))));";
             ResultSet res = stmt.executeQuery(query);
 
-            //list = this.getResults(res);
+            count = this.getResults(res);
 
         } catch (Exception e) {
             if (DEBUG) e.printStackTrace();
         }
-        return list;
+        return count;
     }
 
-    private List<Person> getResults(ResultSet res) throws SQLException {
+    private int getResults(ResultSet res) throws SQLException {
 
-        List<Person> list = new ArrayList();
+        int count = 0;
         while (res.next()) {
-            Person p = new Person();
+
             //p.setId(res.getString("id"));
-            p.setJob(res.getString("job"));
-            p.setBirthday(res.getString("birthday"));
-            p.setName(res.getString("name"));
-            list.add(p);
+            count = res.getInt("count");
+
         }
-        return list;
+        return count;
     }
 
     public String getName() {
