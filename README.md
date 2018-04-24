@@ -73,7 +73,8 @@ __________________
 (endorsement graph https://github.com/datsoftlyngby/soft2018spring-databases-teaching-material/raw/master/data/archive_graph.tar.gz) into a Neo4j database and into an SQL database respectively.
 
 
-My solution uses this IP for the server;
+My solution uses this IP for the server:
+
 167.99.249.26:7474 - Neo4J
 
 167.99.249.26:8888 - PostGreSQL
